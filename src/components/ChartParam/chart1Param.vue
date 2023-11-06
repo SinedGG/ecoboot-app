@@ -4,12 +4,6 @@
 
     <div class="content">
       <div class="main-content">
-        <div class="form-group">
-          <label for="selector">Виберіть станцію:</label>
-          <select id="selector" v-model="selectedOption">
-            <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
-          </select>
-        </div>
 
         <div class="form-group">
           <label for="startDate">Виберіть дату початку вимірювання:</label>
@@ -29,10 +23,10 @@
 
 <script>
 import Loading from "@/components/LoadingAnim.vue"
+
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-
-import reports from '@/db/reports';
+import charts from "@/db/charts.js"
 
 export default {
   components: {
@@ -41,37 +35,29 @@ export default {
   data() {
     return {
       isLoading: false,
-      selectedOption: null,
+
       startDate: null,
       endDate: null,
-      options: []
     };
   },
 
-  async mounted() {
-    const t = await reports.station_list()
-    t.forEach(element => {
-      this.options.push(
-        { value: element.id_station, label: element.name }
-      )
-    });
-  },
+
 
   methods: {
     async submitForm() {
-      if (!this.selectedOption || !this.startDate || !this.endDate) {
+      if (!this.startDate || !this.endDate) {
         toast.warn("Введіть значення для вибірки", {
           position: toast.POSITION.TOP_RIGHT,
         });
       } else {
         this.isLoading = true
 
-        var data = await reports.station2(this.selectedOption, this.startDate, this.endDate)
+        var data = await charts.chart1(this.startDate, this.endDate)
         this.isLoading = false
-        const selectedOptionObj = this.options.find(option => option.value === this.selectedOption);
-        data.title = `вимірювань станції за адресою ${selectedOptionObj.label}\nза період з ${this.startDate} по ${this.endDate}`
 
+        data.title = `Кількість максимальних значень шкідливих частинок PM2.5, PM10 в розрізі областей з ${this.startDate} по ${this.endDate}`
 
+        data.chart = true
         this.$router.push({ name: 'report-viewer', params: { data: JSON.stringify(data) } });
       }
     }

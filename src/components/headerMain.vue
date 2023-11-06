@@ -7,6 +7,8 @@
         <div class="center">
             <router-link to="/tables"><button class="button">Пергляд таблиць</button></router-link>
             <router-link to="/reports"><button class="button">Звіти</button></router-link>
+            <router-link to="/charts"><button class="button">Графіки</button></router-link>
+            <router-link to="/power-bi"><button class="button">Power BI</button></router-link>
 
         </div>
     </header>

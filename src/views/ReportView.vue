@@ -17,6 +17,9 @@
         </div>
 
         <div class="report-content">
+
+            <report-chart v-if="chart" :chartData="chartData" />
+
             <table>
                 <thead>
                     <tr>
@@ -37,17 +40,30 @@
 </template>
   
 <script>
+import ReportChart from '@/components/ReportChart.vue'
+
 export default {
+
+    components: {
+        ReportChart,
+    },
+
     data() {
         return {
             reportSubTitle: "",
             tableData: Array,
-            creationDate: "October 3, 2023",
+            creationDate: null,
+            chart: false,
+            chartData: Object
         };
     },
     methods: {
         goBack() {
-            this.$router.push("/reports");
+            if (this.chart)
+                this.$router.push("/charts");
+            else
+                this.$router.push("/reports");
+
         },
         printReport() {
             window.print();
@@ -60,7 +76,36 @@ export default {
         this.creationDate = new Date().toLocaleString()
         this.reportSubTitle = table.title
 
-    },
+        if (table.chart) {
+            const tableHeader = Object.keys(table.data[0])
+
+            var labels = []
+            var datasets = []
+
+            for (let i = 0; i < table.data.length; i++) {
+                labels.push(table.data[i][tableHeader[0]])
+            }
+            for (let i = 1; i < tableHeader.length; i++) {
+                var values = [];
+                for (let j = 0; j < table.data.length; j++) {
+                    values.push(table.data[j][tableHeader[i]])
+                }
+                datasets.push({
+                    label: table.header[i],
+                    backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.2)`,
+                    borderWidth: 1,
+                    data: values,
+                })
+            }
+
+            this.chartData = {
+                labels, datasets
+            };
+            this.chart = true
+        }
+    }
+
+
 };
 </script>
   

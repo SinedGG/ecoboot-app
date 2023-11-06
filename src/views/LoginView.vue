@@ -22,7 +22,7 @@ export default {
     return {
       ip: 'pg.sded.cc',
       username: 'dev',
-      password: 'Dev_pasw123'
+      password: 'Dev_pasw'
     };
   },
   methods: {

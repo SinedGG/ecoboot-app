@@ -17,9 +17,19 @@ const routes = [
     component: () => import("@/views/ReportPick.vue"),
   },
   {
+    path: "/power-bi",
+    name: "reports-bi",
+    component: () => import("@/views/PowerBi.vue"),
+  },
+  {
     path: "/report-viewer/:data*",
     name: "report-viewer",
     component: () => import("@/views/ReportView.vue"),
+  },
+  {
+    path: "/charts",
+    name: "charts",
+    component: () => import("@/views/ChartPick.vue"),
   },
 ];
 
