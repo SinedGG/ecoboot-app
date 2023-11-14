@@ -6,14 +6,27 @@
         </div>
         <div class="center">
             <router-link to="/tables"><button class="button">Пергляд таблиць</button></router-link>
-            <router-link to="/reports"><button class="button">Звіти</button></router-link>
-            <router-link to="/charts"><button class="button">Графіки</button></router-link>
-            <router-link to="/power-bi"><button class="button">Power BI</button></router-link>
+            <router-link v-if="user === superUser" to="/reports"><button class="button">Звіти</button></router-link>
+            <router-link v-if="user === superUser" to="/charts"><button class="button">Графіки</button></router-link>
+            <router-link v-if="user === superUser" to="/power-bi"><button class="button">Power BI</button></router-link>
 
         </div>
     </header>
 </template>
-  
+<script>
+export default {
+    data() {
+        return {
+            user: localStorage.getItem("user"),
+            superUser: "dev"
+        };
+    },
+    mounted() {
+
+
+    },
+};
+</script>
 <style scoped>
 .header {
     display: flex;

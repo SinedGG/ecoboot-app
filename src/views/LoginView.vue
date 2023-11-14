@@ -30,7 +30,7 @@ export default {
 
       try {
         await connect(this.ip, this.username, this.password);
-
+        localStorage.setItem("user", this.username)
         this.$router.push("/tables");
 
       } catch (error) {
