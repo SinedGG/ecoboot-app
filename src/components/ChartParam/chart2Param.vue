@@ -50,7 +50,7 @@ export default {
 
         var data = await charts.chart2(this.selectedOption)
         const selectedOptionObj = this.options.find(option => option.value === this.selectedOption);
-        data.title = `Кількість разів, коли було зафіксовано середньодобові значення твердих частинок PM2.5, значення яких належать до шкідливого рівня на станції за адресою ${selectedOptionObj.label} за весь час`
+        data.title = `Кількість разів, коли було зафіксовано середньодобові значення твердих частинок PM2.5, значення яких належать до шкідливого рівня на станції за адресою ${selectedOptionObj.label} станом на ${new Date().toLocaleString()}`
 
         data.chart = true
         this.$router.push({ name: 'report-viewer', params: { data: JSON.stringify(data) } });
